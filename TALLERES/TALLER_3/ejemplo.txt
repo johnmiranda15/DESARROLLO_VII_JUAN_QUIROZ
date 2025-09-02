@@ -1,0 +1,1 @@
+Este es unn ejemplo de texto para leer desde file_get_contents
