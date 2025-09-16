@@ -13,6 +13,10 @@ class Libro implements Prestable {
         $this->anioPublicacion = $anioPublicacion;
     }
 
+    public function getTitulo() {
+    return $this->titulo;
+    }
+
     public function obtenerInformacion() {
         return "Título: {$this->titulo}, Autor: {$this->autor}, Año: {$this->anioPublicacion}";
     }
