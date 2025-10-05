@@ -1,0 +1,30 @@
+[
+    {
+        "nombre": "Juan",
+        "email": "mirandajohn634@gmail.com",
+        "fecha_nacimiento": "1994-12-09",
+        "sitio_web": "https:\/\/jq.com",
+        "genero": "masculino",
+        "intereses": [
+            "deportes"
+        ],
+        "comentarios": "registro",
+        "edad": 30,
+        "foto_perfil": "uploads\/perfil_68e1cba3c97db9.62611787.jpg",
+        "fecha_registro": "2025-10-05 03:36:35"
+    },
+    {
+        "nombre": "Laura",
+        "email": "laura13@gmail.com",
+        "fecha_nacimiento": "2000-01-04",
+        "sitio_web": "https:\/\/laura-bussines.com",
+        "genero": "femenino",
+        "intereses": [
+            "lectura"
+        ],
+        "comentarios": "Ecomerce",
+        "edad": 25,
+        "foto_perfil": "uploads\/perfil_68e1cc5207ec76.76885058.png",
+        "fecha_registro": "2025-10-05 03:39:30"
+    }
+]

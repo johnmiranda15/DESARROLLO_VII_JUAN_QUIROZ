@@ -11,6 +11,16 @@ function validarEdad($edad) {
     return is_numeric($edad) && $edad >= 18 && $edad <= 120;
 }
 
+function calcularEdad($fechaNacimiento) {
+    $fechaObj = DateTime::createFromFormat('Y-m-d', $fechaNacimiento);
+    if (!$fechaObj) {
+        return 0;
+    }
+    
+    $hoy = new DateTime();
+    return $hoy->diff($fechaObj)->y;
+}
+
 function validarSitioWeb($sitioWeb) {
     return empty($sitioWeb) || filter_var($sitioWeb, FILTER_VALIDATE_URL);
 }
