@@ -1,0 +1,22 @@
+{
+    "1": {
+        "nombre": "Laptop",
+        "precio": 800
+    },
+    "2": {
+        "nombre": "Mouse",
+        "precio": 25
+    },
+    "3": {
+        "nombre": "Teclado",
+        "precio": 45
+    },
+    "4": {
+        "nombre": "Monitor",
+        "precio": 200
+    },
+    "5": {
+        "nombre": "Audifonos",
+        "precio": 60
+    }
+}
