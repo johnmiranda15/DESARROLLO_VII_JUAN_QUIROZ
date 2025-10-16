@@ -1,7 +1,7 @@
 <?php
 // Configurar una cookie segura
 setcookie("usuario", "Juan", [
-    'expires' => time() + 3600,
+    'expires' => time() + 86400,
     'path' => '/',
     'domain' => '',
     'secure' => true,
