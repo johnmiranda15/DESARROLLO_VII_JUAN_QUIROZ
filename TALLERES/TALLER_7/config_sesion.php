@@ -6,6 +6,10 @@ ini_set('session.cookie_secure', 1);
 
 session_start();
 
+if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = [];
+}
+
 // Regenerar el ID de sesión periódicamente
 if (!isset($_SESSION['ultima_actividad']) || (time() - $_SESSION['ultima_actividad'] > 300)) {
     session_regenerate_id(true);
