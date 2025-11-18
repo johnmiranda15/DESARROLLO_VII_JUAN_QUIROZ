@@ -1,0 +1,11 @@
+CREATE TABLE cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) NOT NULL UNIQUE,
+    telefono VARCHAR(20),
+    direccion VARCHAR(255),
+    fecha_registro DATE DEFAULT (CURRENT_DATE),
+    status TINYINT NOT NULL DEFAULT 1, -- 1 = activo, 0 = inactivo
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

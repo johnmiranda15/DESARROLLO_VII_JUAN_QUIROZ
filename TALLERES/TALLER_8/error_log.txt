@@ -1,0 +1,1 @@
+[2025-10-27 04:06:30] PDO: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'nuevo@example.com' for key 'email'
