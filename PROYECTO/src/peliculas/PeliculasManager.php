@@ -22,47 +22,42 @@ class PeliculasManager
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /* // Crear una nueva película
-    public function createMovie($data)
-    {
-        $sql = "INSERT INTO peliculas (titulo, tipo, genero, anio, duracion, clasificacion, sinopsis, stock)
-                VALUES (:titulo, :tipo, :genero, :anio, :duracion, :clasificacion, :sinopsis, :stock)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([
-            ':titulo' => $data['titulo'] ?? '',
-            ':tipo' => $data['tipo'] ?? '',
-            ':genero' => $data['genero'] ?? '',
-            ':anio' => $data['anio'] ?? null,
-            ':duracion' => $data['duracion'] ?? null,
-            ':clasificacion' => $data['clasificacion'] ?? '',
-            ':sinopsis' => $data['sinopsis'] ?? '',
-            ':stock' => $data['stock'] ?? 0
-        ]);
-    }
- */
     public function createMovie($pelicula)
     {
-        // Validación mínima
-        $tiposValidos = ['pelicula', 'serie'];
-        if (!in_array($pelicula->tipo, $tiposValidos, true)) {
-            $pelicula->tipo = 'pelicula';
+        // Aceptar array o objeto; convertir array a objeto para usar ->prop
+        if (is_array($pelicula)) {
+            $pelicula = (object) $pelicula;
         }
 
+        // Validación mínima y valores por defecto
+        $tiposValidos = ['pelicula', 'serie'];
+        $tipo = (isset($pelicula->tipo) && in_array($pelicula->tipo, $tiposValidos, true))
+            ? $pelicula->tipo
+            : 'pelicula';
+
+        $titulo = $pelicula->titulo ?? '';
+        $genero = $pelicula->genero ?? '';
+        $anio = $pelicula->anio ?? null;
+        $duracion = $pelicula->duracion ?? null;
+        $clasificacion = $pelicula->clasificacion ?? '';
+        $sinopsis = $pelicula->sinopsis ?? '';
+        $stock = $pelicula->stock ?? 0;
+
         $stmt = $this->db->prepare("
-        INSERT INTO peliculas 
-        (titulo, tipo, genero, anio, duracion, clasificacion, sinopsis, stock)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ");
+            INSERT INTO peliculas 
+            (titulo, tipo, genero, anio, duracion, clasificacion, sinopsis, stock)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ");
 
         $payload = [
-            $pelicula->titulo,
-            $pelicula->tipo,
-            $pelicula->genero,
-            $pelicula->anio,
-            $pelicula->duracion,
-            $pelicula->clasificacion,
-            $pelicula->sinopsis,
-            $pelicula->stock
+            $titulo,
+            $tipo,
+            $genero,
+            $anio,
+            $duracion,
+            $clasificacion,
+            $sinopsis,
+            $stock
         ];
 
         try {
