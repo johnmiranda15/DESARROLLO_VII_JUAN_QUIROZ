@@ -1,7 +1,7 @@
 CREATE TABLE peliculas (
     id_pelicula INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL UNIQUE,
-    tipo ENUM('película', 'serie') NOT NULL,
+    tipo ENUM('pelicula', 'serie') NOT NULL,
     genero VARCHAR(50) NOT NULL,
     anio YEAR NOT NULL,
     duracion INT NOT NULL, -- minutos
