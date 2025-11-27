@@ -2,7 +2,7 @@
 <div class="pelicula-form">
     <h2>Editar Película</h2>
 
-    <form action="index.php?action=update" method="post">
+    <form action="index.php?action=edit&id=<?php echo $pelicula['id_pelicula']; ?>" method="post">
         
         <input type="hidden" name="id_pelicula" value="<?php echo $pelicula['id_pelicula']; ?>">
 
@@ -11,7 +11,7 @@
 
         <label>Tipo</label>
         <select name="tipo" required>
-            <option value="película" <?php echo ($pelicula['tipo'] == 'película') ? 'selected' : ''; ?>>Película</option>
+            <option value="pelicula" <?php echo ($pelicula['tipo'] == 'pelicula') ? 'selected' : ''; ?>>Película</option>
             <option value="serie" <?php echo ($pelicula['tipo'] == 'serie') ? 'selected' : ''; ?>>Serie</option>
         </select>
 
