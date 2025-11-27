@@ -49,7 +49,7 @@ switch ($action) {
 
         // Obtener la película para editar
         $pelicula = $peliculasManager->getMovieById($id);
-        require BASE_PATH . 'views/peliculas/editar.php';
+        require '../views/peliculas/editar.php';
         break;
 
     case 'delete':
