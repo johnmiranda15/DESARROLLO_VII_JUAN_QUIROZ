@@ -34,6 +34,9 @@ define('DB_NAME', getenv('DB_NAME'));
 define('DB_USER', getenv('DB_USER'));
 define('DB_PASS', getenv('DB_PASS'));
 
+// Ruta absoluta a la carpeta de vistas
+define('VIEWS_PATH', __DIR__ . '/views/');
+
 // Derived constants
 define('PUBLIC_URL', BASE_URL . '/public');
 

@@ -1,79 +1,37 @@
 <?php
-// ✅ Mostrar errores (útil en desarrollo)
+// PROYECTO/index.php
+
+// Mostrar errores en desarrollo
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// ✅ Definir ruta base
-define('BASE_PATH', __DIR__ . '/');
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/src/Database.php';
 
-// ✅ Configuración
-require_once BASE_PATH . 'config.php';
+// Managers
+require_once __DIR__ . '/src/peliculas/PeliculasManager.php';
+require_once __DIR__ . '/src/clientes/ClientesManager.php';
+require_once __DIR__ . '/src/alquileres/AlquileresManager.php';
 
-// ✅ Clases necesarias
-require_once BASE_PATH . 'src/Database.php';
-require_once BASE_PATH . 'src/peliculas/PeliculasManager.php';
-require_once BASE_PATH . 'src/peliculas/Peliculas.php';
+// Instancias
+$peliculasManager   = new PeliculasManager();
+$clientesManager    = new ClientesManager();
+$alquileresManager  = new AlquileresManager();
 
-// ✅ Instanciamos el manager
-$peliculasManager = new PeliculasManager();
+// Datos para el dashboard
+$totalPeliculas  = count($peliculasManager->getAllMovies());
+$totalClientes   = count($clientesManager->obtenerTodosLosClientes());
+$alquileres      = $alquileresManager->obtenerTodosLosAlquileres();
 
-// ✅ Acción por defecto
-$action = $_GET['action'] ?? 'list';
+// Filtramos solo alquileres activos / atrasados
+$alquileresActivos = array_filter($alquileres, function($a) {
+    return in_array($a['estado'], ['alquilado', 'atrasado']);
+});
 
-// ✅ Controlador de rutas (acciones)
-switch ($action) {
+// Tomamos solo unos pocos para mostrar (ej. últimos 5)
+$ultimasPeliculas = $peliculasManager->getAllMovies();
+$ultimasPeliculas = array_slice($ultimasPeliculas, 0, 5);
 
-    case 'create':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'titulo'        => $_POST['titulo']        ?? '',
-                'tipo'          => $_POST['tipo']          ?? '',
-                'genero'        => $_POST['genero']        ?? '',
-                'anio'          => $_POST['anio']          ?? '',
-                'duracion'      => $_POST['duracion']      ?? '',
-                'clasificacion' => $_POST['clasificacion'] ?? '',
-                'sinopsis'      => $_POST['sinopsis']      ?? '',
-                'stock'         => $_POST['stock']         ?? '',
-            ];
-
-            $peliculasManager->createMovie($data);
-            header('Location: index.php');
-            exit;
-        }
-        require BASE_PATH . 'views/peliculas/formulario.php';
-        break;
-
-    case 'edit':
-        $id = $_GET['id'] ?? null;
-        if (!$id) {
-            header('Location: index.php');
-            exit;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Actualizar película
-            $peliculasManager->updateMovie($id, $_POST);
-            header('Location: index.php');
-            exit;
-        }
-
-        // Obtener la película para editar
-        $pelicula = $peliculasManager->getMovieById($id);
-        require BASE_PATH . 'views/peliculas/editar.php';
-        break;
-
-    case 'delete':
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $peliculasManager->deleteMovie($id);
-        }
-        header('Location: index.php');
-        break;
-
-    default:
-        // Listar todas las películas
-        $peliculas = $peliculasManager->getAllMovies();
-        require BASE_PATH . 'views/peliculas/lista.php';
-        break;
-}
+// Cargar la vista del dashboard (que usará layout.php)
+require __DIR__ . '/views/dashboard.php';

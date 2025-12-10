@@ -1,4 +1,6 @@
 <?php
+// src/clientes/index.php
+
 // Mostrar errores (útil en desarrollo)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -9,11 +11,11 @@ require_once __DIR__ . '/../../config.php';
 
 // Clases necesarias
 require_once __DIR__ . '/../../src/Database.php';
-require_once __DIR__ . '/PeliculasManager.php';
-require_once __DIR__ . '/Peliculas.php';
+require_once __DIR__ . '/ClientesManager.php';
+require_once __DIR__ . '/Cliente.php';
 
 // Instanciar manager
-$peliculasManager = new PeliculasManager();
+$clientesManager = new ClientesManager();
 
 // Acción por defecto
 $action = $_GET['action'] ?? 'list';
@@ -23,42 +25,41 @@ switch ($action) {
 
     case 'create':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $peliculasManager->createMovie($_POST);
-            header('Location: ' . BASE_URL . '/peliculas');
+            $clientesManager->crearCliente($_POST);
+            header('Location: ' . BASE_URL . '/clientes');
             exit;
         }
-        // Vista para crear
-        require VIEWS_PATH . 'peliculas/formulario.php';
+        require VIEWS_PATH . 'clientes/formulario.php';
         break;
 
     case 'edit':
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: ' . BASE_URL . '/peliculas');
+            header('Location: ' . BASE_URL . '/clientes');
             exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $peliculasManager->updateMovie($id, $_POST);
-            header('Location: ' . BASE_URL . '/peliculas');
+            $clientesManager->actualizarCliente($id, $_POST);
+            header('Location: ' . BASE_URL . '/clientes');
             exit;
         }
 
-        $pelicula = $peliculasManager->getMovieById($id);
-        require VIEWS_PATH . 'peliculas/editar.php';
+        $cliente = $clientesManager->obtenerCliente($id);
+        require VIEWS_PATH . 'clientes/editar.php';
         break;
 
     case 'delete':
         $id = $_GET['id'] ?? null;
         if ($id) {
-            $peliculasManager->deleteMovie($id);
+            $clientesManager->eliminarCliente($id);
         }
-        header('Location: ' . BASE_URL . '/peliculas');
+        header('Location: ' . BASE_URL . '/clientes');
         exit;
 
     case 'list':
     default:
-        $peliculas = $peliculasManager->getAllMovies();
-        require VIEWS_PATH . 'peliculas/lista.php';
+        $clientes = $clientesManager->obtenerTodosLosClientes();
+        require VIEWS_PATH . 'clientes/lista.php';
         break;
 }
